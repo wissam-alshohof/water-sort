@@ -1,0 +1,46 @@
+:root {
+    --border-radius: 15px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.pipe_container {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: var(--border-radius);
+    width: 30px;
+    flex-grow: 0;
+    height: 170px;
+}
+.pipe_container .color-section {
+    display: flex;
+    position: relative;
+    flex-grow: 0;
+    height: 40px;
+}
+
+.pipe_container .color-section:nth-child(1) {
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/* .pipe_container .color-section::after {
+    content: attr(data);
+    position: absolute;
+    color: aliceblue;
+    font-size: 3rem;
+} */
