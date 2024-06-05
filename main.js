@@ -64,7 +64,7 @@ function generateColors(origin) {
     }
     return res;
 }
-function getRandomIndex(size,cache) {
+function getRandomIndexInRange(size,cache) {
    const rand = Math.floor(Math.random() * size);
     cache.get(rand) ? cache.set(rand,cache.get(rand) + 1) : cache.set(rand,1);
     if(cache.get(rand) == 4) {}
