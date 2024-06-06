@@ -20,11 +20,10 @@ function makePipes(size) {
         "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#ffbb78", "#98df8a",
         "#ff9896", "#c5b0d5"
     ].slice(0,size).map(c => ({color:c,volume:4}))};
-
-    new Array(size).fill(0).forEach((i) => {
-        let colorsArr = generateColors(colors[size]);
+    for (let i of Array(size).fill(0)) {
+        colorsArr = generateColors( colors[size]);
         makePipe(colorsArr);
-    })
+    }
     // makePipe([])
     // makePipe([])
 }
@@ -42,19 +41,25 @@ function makePipe(colors) {
     return fillPipe(...colors);
     
 }
-function generateColors(origin) {
-    const arr =[...origin];
-    // console.log(c++)
-    const res =[];
-    const cache = new Map();
+function generateColors(arr,res=[]) {
+    
     while (res.length < 4) {
-        const randIndex = getRandomIndexInRange(arr.length, cache);
-        if(arr[randIndex] && arr[randIndex].volume != 0 && res.filter(c => c==arr[randIndex].color).length <2 ) {
-            res.push(arr[randIndex].color)
-            arr[randIndex].volume--;
-        }
+        const randIndex = getRandomIndexInRange(arr.length);
         if(arr[randIndex].volume == 0) {
-            arr.splice(randIndex, 1)
+            arr.splice(randIndex, 1);
+            return generateColors(arr,res);
+        }
+        if(arr[randIndex] && arr[randIndex].volume != 0 && res.filter(c => c==arr[randIndex].color).length <3 ) {
+            const firstFull = arr[0]?.volume ==4 
+            const secondFull = arr[1]?.volume ==4 
+            if(arr.length == 2 && (firstFull || (secondFull))) {
+                firstFull && res.push(arr[0].color) && arr[0].volume--;
+                secondFull &&  res.push( arr[1].color) && arr[1].volume--
+            }
+            else {
+                res.push(arr[randIndex].color)
+                arr[randIndex].volume--;
+            }
         }
         
         if(!arr.length) {
@@ -63,8 +68,7 @@ function generateColors(origin) {
     }
     return res;
 }
-function getRandomIndexInRange(size,cache) {
-   const rand = Math.floor(Math.random() * size);
-    cache.get(rand) ? cache.set(rand,cache.get(rand) + 1) : cache.set(rand,1);
-    if(cache.get(rand) == 4) {}
+function getRandomIndexInRange(size) {
+   return Math.floor(Math.random() * size);
+    
 }
