@@ -27,6 +27,10 @@
     flex-grow: 0;
     height: 170px;
 }
+.pipe_container.selected {
+    transform: translateY(-10%);
+    transition: transform 100ms ease-in;
+}
 .pipe_container .color-section {
     display: flex;
     position: relative;

@@ -15,19 +15,39 @@ document.body.appendChild(container);
 makePipes(10)
 
 function makePipes(size) {
+    pipes = [];
     const colors = {[size]:[
         "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b",
         "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#ffbb78", "#98df8a",
         "#ff9896", "#c5b0d5"
     ].slice(0,size).map(c => ({color:c,volume:4}))};
-    for (let i of Array(size).fill(0)) {
+    for (let i in Array(size).fill(0)) {
         colorsArr = generateColors( colors[size]);
-        makePipe(colorsArr);
+        pipes.push(makePipe(colorsArr,i));
     }
-    // makePipe([])
-    // makePipe([])
+    pipes.push(makePipe([],size));
+    pipes.push(makePipe([],size+1));
+    let pickedColorPipe = {};
+    const pipesContainers = document.querySelectorAll('div.pipe_container');
+    container.addEventListener('click',e => {
+        pipesContainers.forEach(p => p.classList.remove('selected'))
+    })
+    pipesContainers.forEach(
+        pipe => pipe.addEventListener('click',e => {
+            e.stopPropagation()
+            pipe.classList.toggle('selected');
+            let clickedPipe = pipes.find(p => pipe.id == "pipe_"+p.id);
+            if(pickedColorPipe.pickedColor) {
+                clickedPipe.spoilColor(pickedColorPipe);
+                document.getElementById(pickedColorPipe.id).classList.remove('selected');
+                pickedColorPipe = {}
+                return;
+            }
+            pickedColorPipe = {pickedColor:clickedPipe.pickColor(pickedColorPipe.id),id:"pipe_"+clickedPipe.id};
+        })
+    )
 }
-function makePipe(colors) {    
+function makePipe(colors,order) {    
     const pipe = document.createElement('div');
     pipe.className ="pipe_container";
     for(let ind in colors) {
@@ -36,9 +56,11 @@ function makePipe(colors) {
         el.className ="color-section";
         // el.setAttribute('data',ind+1)
         pipe.appendChild(el);
+
     }  
+    pipe.id = `pipe_${+order+1}`
     container.appendChild(pipe)
-    return fillPipe(...colors);
+    return fillPipe(+order+1,...colors);
     
 }
 function generateColors(arr,res=[]) {

@@ -1,9 +1,9 @@
-function fillPipe(...params) {
+function fillPipe(id,...params) {
     const p = [];
     for(let param of params) {
         if(param && params.length <= 4)  p.push(param);
     }
-    return new Pipe(p);
+    return new Pipe(id,p);
 }
 
 
@@ -11,11 +11,13 @@ function fillPipe(...params) {
 class Pipe {
     #volume = 0;
     #colors = [];
+    id = NaN;
     //first element if pipe is empty;
     //second element array of colors and volumes
     //third element if pipe is full with one color
     pipe = [true,[], false];
-    constructor(colors){
+    constructor(id,colors){
+        this.id = id;
         if(colors && colors.length) {
             this.#colors = colors;
             this.#volume = colors.length;
@@ -50,19 +52,28 @@ class Pipe {
         }
         
     }
-    static isPicked = false;
-    static pickedColor = {};
-    pickColor() {
-        if(Pipe.isPicked = !Pipe.isPicked) {
-            Pipe.pickedColor = this.pipe[1].pop();
+    isPicked = false;
+    pickedColor = {};
+    pickColor(id) {
+
+        if(this.isPicked = !this.isPicked && !id) {
+            this.pickedColor = this.pipe[1].pop();
         } else {
-            this.pipe[1].push({...Pipe.pickedColor});
-            Pipe.pickColor ={};
+            this.pipe[1].push({...this.pickedColor});
+            this.pickedColor ={};
         }
-        
+        return this.pickedColor;
     }
-    spoilColor() {
-        if(Pipe.isPicked) return;
+    /**
+     * 
+     * @param {{color:string,volume:number}} color 
+     * @returns 
+     */
+    spoilColor(color) {
+        if(this.isPicked) return;
+        (color.pickedColor.color == this.pipe[1][this.#volume-1] && this.volume != 4) || this.pipe[0] ?
+        console.log({color}) : color.id == this.id ? this.pickColor(color.id) : alert("You idiot this is not allowed")
+        
     }
 }
 
