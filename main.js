@@ -30,7 +30,6 @@ function makePipes(size) {
 }
 function makePipe(colors) {    
     const pipe = document.createElement('div');
-    pipe.style.border="1px solid #1f1f1f";
     pipe.className ="pipe_container";
     for(let ind in colors) {
         const el = document.createElement('div');
@@ -57,8 +56,8 @@ function generateColors(origin) {
         if(arr[randIndex].volume == 0) {
             arr.splice(randIndex, 1)
         }
+        
         if(!arr.length) {
-            console.log({res},{randIndex})
             break;
         }
     }

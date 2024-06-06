@@ -21,6 +21,7 @@
     padding-top: 10px;
     display: flex;
     flex-direction: column-reverse;
+    border: 1px solid #afafaf;
     border-radius: var(--border-radius);
     width: 30px;
     flex-grow: 0;
