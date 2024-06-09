@@ -77,7 +77,7 @@ describe("state test", () => {
   );
 
   it.each`
-    base    |   target  |   done        |   testSample |   result
+    base    |   target  |   done        |   testSample  |   result
     ${0}    |   ${1}    |   ${false}    |   ${0}        |   ${null}
     ${1}    |   ${0}    |   ${true}     |   ${0}        |   ${[["b"], ["a"], ["a", "a"], ["c", "c", "c"], ['b' ,'a', 'b'], ['c']]}
     ${1}    |   ${3}    |   ${false}    |   ${0}        |   ${null}

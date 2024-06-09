@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "private": "true",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +14,9 @@
   "dependencies": {
     "jest": "^29.7.0",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }
